@@ -24,9 +24,9 @@ class ParabolaSolver(nn.Module):
     
     def forward(self, input):
         l1 = self.hidden(input)
-        r1 = torch.ReLU(l1)
+        r1 = torch.relu(l1)
         l2 = self.hidden2(r1)
-        r2 = torch.ReLU(l2)
+        r2 = torch.relu(l2)
         result = self.output(r2)
         return result
 
@@ -57,17 +57,13 @@ for i in range(10000):
     optimizer.step()
 
 # get prediction
-y_pred = x @ hidden_weight + hidden_bias
-y_pred.relu_()
-y_pred = y_pred @ output_weight + output_bias
+with torch.no_grad():
+    pred = model(x)
 
+pred = pred.to('cpu')
 x = x.to('cpu')
 y = y.to('cpu')
-y_pred = y_pred.to('cpu')
-y_pred.detach_()
-
-print(y_pred)
 
 plt.scatter(x, y)
-plt.scatter(x, y_pred, color='red')
+plt.scatter(x, pred, color='red')
 plt.show()
