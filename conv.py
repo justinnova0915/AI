@@ -101,3 +101,4 @@ if __name__ == '__main__':
             correct += (test_result == test_labels).sum().item()
 
     print(f"Accuracy: {100 * correct / 10000}%")
+    torch.save(model.state_dict(), "mnist_cnn.pth")
