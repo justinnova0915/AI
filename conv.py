@@ -7,7 +7,7 @@ import numpy as np
 from tqdm import tqdm
 
 # init gpu
-device = torch.device('cuda')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 # set up conversion pipeline (image -> tensor)
 transform = v2.Compose([
